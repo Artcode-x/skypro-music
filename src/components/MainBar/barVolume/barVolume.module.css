@@ -1,0 +1,33 @@
+.bar__volumeBlock {
+    width: auto;
+    display: flex;
+    align-items: center;
+    padding: 0 92px 0 0;
+}
+
+.volume__content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.volume__image {
+    width: 13px;
+    height: 18px;
+    margin-right: 17px;
+}
+
+.volume__svg {
+    width: 13px;
+    height: 18px;
+    fill: transparent;
+}
+
+.volume__progress {
+    width: 109px;
+}
+
+.volume__progressLine {
+    width: 109px;
+}

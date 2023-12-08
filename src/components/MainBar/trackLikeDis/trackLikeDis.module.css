@@ -1,0 +1,33 @@
+.trackPlay__likeDis {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 26%;
+}
+
+.trackPlay__like {
+    margin-left: 23px;
+}
+
+.trackPlay__dislike {
+    margin-left: 28.5px;
+}
+
+.trackPlay__likeSvg {
+    width: 14px;
+    height: 12px;
+    fill: transparent;
+    stroke: #696969;
+}
+
+.trackPlay__dislikeSvg {
+    width: 14.34px;
+    height: 13px;
+    fill: transparent;
+    stroke: #696969;
+}
+
+.track__buttonLike {
+    background: transparent;
+    border: none;
+}

@@ -1,0 +1,11 @@
+.filterList__year {
+    position: absolute;
+    box-sizing: border-box;
+    margin-top: 10px;
+    width: 403px;
+    height: 92px;
+    padding: 34px;
+    background-color: #313131;
+    overflow: hidden;
+    border-radius: 12px;
+}

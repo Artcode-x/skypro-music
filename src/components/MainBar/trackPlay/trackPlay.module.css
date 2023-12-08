@@ -1,0 +1,70 @@
+.player__trackPlay {
+    display: flex;
+    flex-direction: row;
+}
+
+.trackPlay__contain {
+    width: auto;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-areas: "image author""image album";
+    align-items: center;
+}
+
+.trackPlay__image {
+    width: 51px;
+    height: 51px;
+    background-color: #313131;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+    grid-area: image;
+}
+
+.trackPlay__author {
+    grid-area: author;
+    min-width: 49px;
+}
+
+.trackPlay__album {
+    grid-area: album;
+    min-width: 49px;
+}
+
+.trackPlay__contain {
+    width: auto;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-areas: "image author""image album";
+    align-items: center;
+}
+
+.trackPlay__svg {
+    width: 18px;
+    height: 17px;
+    fill: transparent;
+    stroke: #4e4e4e;
+}
+
+.trackPlay__authorLink {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #ffffff;
+    white-space: nowrap;
+    background: transparent;
+    border: medium none;
+}
+
+.trackPlay__albumLink {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 24px;
+    color: #ffffff;
+    white-space: nowrap;
+    background: transparent;
+    border: medium none;
+}

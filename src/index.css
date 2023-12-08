@@ -1,0 +1,78 @@
+@font-face {
+    font-family: "StratosSkyeng";
+    src: url("./fonts/Stratos-Regular.woff2") format("woff2"),
+        url("./fonts/Stratos-Regular.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+.trackPlay__likeSvg,
+._btn-icon:active,
+.trackPlay__dislikeSvg {
+    fill: #696969;
+    stroke: #ffffff;
+    cursor: pointer;
+}
+
+._btn-icon:active svg {
+    fill: transparent;
+    stroke: #ffffff;
+    cursor: pointer;
+}
+
+._btn-text:active {
+    border-color: #ad61ff;
+    color: #ad61ff;
+    cursor: pointer;
+}
+
+._btn-icon:hover svg {
+    fill: transparent;
+    stroke: #acacac;
+    cursor: pointer;
+}
+
+._btn-text:hover {
+    border-color: #d9b6ff;
+    color: #d9b6ff;
+    cursor: pointer;
+}
+
+#root {
+    width: 100%;
+    min-height: 100%;
+    overflow: hidden;
+    background-color: #181818;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    font-family: 'StratosSkyeng', sans-serif;
+    color: #ffffff;
+}
+
+ul li {
+    list-style: none;
+}
+
+button, ._btn {
+    cursor: pointer;
+}
+
+a, a:visited {
+    text-decoration: none;
+    font-family: 'StratosSkyeng', sans-serif;
+    cursor: pointer;
+}
+
+*:before, *:after {
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}

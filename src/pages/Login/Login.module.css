@@ -1,0 +1,150 @@
+.pageContainer {
+    max-width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.85);
+}
+
+.modalForm {
+    display: flex;
+    --modal-width: 366px;
+    --modal-height: 439px;
+    position: absolute;
+    left: calc(50% - (var(--modal-width) / 2));
+    top: calc(50% - (var(--modal-height) / 2));
+    box-sizing: border-box;
+    width: var(--modal-width);
+    min-height: var(--modal-height);
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 43px 47px 47px 40px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.modalLogo {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 34px;
+    background-color: transparent;
+}
+
+.modalLogoImage {
+    width: 140px;
+    height: 21px;
+}
+
+.modalInput {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #d0cece;
+    padding: 8px 1px;
+}
+
+.modalInput::placeholder {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 24px;
+    color: #d0cece;
+}
+
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+
+    width: 278px;
+    height: 52px;
+    border-radius: 6px;
+    border: none;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 24px;
+}
+
+.button:disabled {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+
+    width: 278px;
+    height: 52px;
+    border-radius: 6px;
+    border: none;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 24px;
+
+    background-color: #303030;
+}
+
+.primaryButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+
+    width: 278px;
+    height: 52px;
+    border-radius: 6px;
+    border: none;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 24px;
+
+    color: #ffffff;
+    background-color: #580ea2;
+}
+
+.primaryButton:hover {
+    background-color: #3f007d;
+}
+
+.primaryButton:active {
+    background-color: #271a58;
+}
+
+.secondaryButton {
+    color: #000000;
+    background-color: transparent;
+    border: none;
+    font-size: 18px;
+}
+
+.secondaryButton:hover {
+    text-decoration: underline;
+}
+
+.secondaryButton:active {
+    text-decoration: underline;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    width: 100%;
+}
+
+.inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 100%;
+}
+
+.error {
+    color: coral;
+    font-weight: 400;
+    font-size: 18px;
+    text-align: center;
+}
