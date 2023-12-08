@@ -1,0 +1,5 @@
+.centerBlock__content {
+    display: flex;
+    flex-direction: column;
+    margin-top: 51px;
+}

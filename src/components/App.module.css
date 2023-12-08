@@ -1,0 +1,22 @@
+.container {
+    max-width: 1920px;
+    height: 100vh;
+    margin: 0 auto;
+    position: relative;
+    background-color: #181818;
+}
+
+.main {
+    flex: 1 1 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(28, 28, 28, 0.5);
+}

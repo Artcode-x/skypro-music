@@ -1,0 +1,77 @@
+.player__btnPrev,
+.player__btnPlay,
+.player__btnNext,
+.player__btnRepeat,
+.player__btnShuffle {
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    background-color: rgba(28, 28, 28, 0);
+    border: medium none;
+}
+
+.player__prevSvg {
+    width: 15px;
+    height: 14px;
+}
+
+.player__btnPrev {
+    margin-right: 23px;
+}
+
+.player__btnPrevSvg {
+    width: 15px;
+    height: 14px;
+}
+
+.player__btnPlay {
+    margin-right: 23px;
+}
+
+.player__btnPlaySvg {
+    width: 22px;
+    height: 20px;
+    fill: #d9d9d9;
+}
+
+.player__btnNext {
+    margin-right: 28px;
+    fill: #a53939;
+}
+
+.player__btnNextSvg {
+    width: 15px;
+    height: 14px;
+    fill: inherit;
+    stroke: #d9d9d9;
+}
+
+.player__btnRepeat {
+    margin-right: 24px;
+}
+
+.player__btnRepeatSvg {
+    width: 18px;
+    height: 12px;
+    fill: transparent;
+    stroke: #696969;
+}
+
+.player__btnShuffle {
+    display: flex;
+    align-items: center;
+}
+
+.player__btnShuffleSvg {
+    width: 19px;
+    height: 12px;
+    fill: transparent;
+    stroke: #696969;
+}
+
+.player__controls {
+    display: flex;
+    flex-direction: row;
+    padding: 0 27px 0 31px;
+}
