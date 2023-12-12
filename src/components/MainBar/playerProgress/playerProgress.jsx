@@ -21,28 +21,50 @@ function PlayerProgress({ audioRef }) {
   const shuffleTrack = useSelector(shuffleTracksSelector);
   const dispatch = useDispatch();
 
-  const toggleProgress = (e) => {
-    audioRef.current.currentTime = e.target.value;
-  };
+
 
   useEffect(() => {
-    if (audioRef?.current.duration) {
-      setDuration(audioRef.current.duration);
-    }
-  });
+    const ref = audioRef.current;
 
-  useEffect(() => {
-    if (audioRef?.current.currentTime) {
-      audioRef.current.addEventListener("timeupdate", () => {
-        setValue(audioRef.current.currentTime);
-        return () => {
-          audioRef.current.removeEventListener("timeupdate", () => {
-            setValue(audioRef.current.currentTime);
-          });
-        };
-      });
-    }
-  });
+    const toggleProgress = (e) => {
+      if (ref.currentTime && ref.duration) {
+        setValue(ref.currentTime);
+        setDuration(ref.duration);
+      } else {
+        setValue(0);
+        setDuration(0);
+      }
+    };
+
+    ref.addEventListener("timeupdate", toggleProgress);
+
+    return () => {
+      ref.removeEventListener("timeupdate", toggleProgress);
+    };
+  }, [audioRef]);
+
+  // const toggleProgress = (e) => {
+  //   audioRef.current.currentTime = e.target.value;
+  // };
+
+  // useEffect(() => {
+  //   if (audioRef?.current.duration) {
+  //     setDuration(audioRef.current.duration);
+  //   }
+  // });
+
+  // useEffect(() => {
+  //   if (audioRef?.current.currentTime) {
+  //     audioRef.current.addEventListener("timeupdate", () => {
+  //       setValue(audioRef.current.currentTime);
+  //       return () => {
+  //         audioRef.current.removeEventListener("timeupdate", () => {
+  //           setValue(audioRef.current.currentTime);
+  //         });
+  //       };
+  //     });
+  //   }
+  // });
 
   useEffect(() => {
     if (value === duration) {
