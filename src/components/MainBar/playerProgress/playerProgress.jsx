@@ -1,51 +1,49 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable jsx-a11y/media-has-caption */
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import style from "./playerProgress.module.css";
+import { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import style from "./playerProgress.module.css"
 import {
   addActiveTrack,
   addPlayTrack,
-} from "../../../store/actions/creators/creators";
+} from "../../../store/actions/creators/creators"
 import allTracksSelector, {
   activeTrackSelector,
   shuffleTracksSelector,
-} from "../../../store/selectors/selectors";
-import formatTime from "../../Helper/Helper";
+} from "../../../store/selectors/selectors"
+import formatTime from "../../Helper/Helper"
 
 function PlayerProgress({ audioRef }) {
-  const [value, setValue] = useState("1");
-  const [duration, setDuration] = useState("0");
-  const allTracks = useSelector(allTracksSelector);
-  const activeTrack = useSelector(activeTrackSelector);
-  const shuffleTrack = useSelector(shuffleTracksSelector);
-  const dispatch = useDispatch();
-
-
+  const [value, setValue] = useState("0")
+  const [duration, setDuration] = useState("0")
+  const allTracks = useSelector(allTracksSelector)
+  const activeTrack = useSelector(activeTrackSelector)
+  const shuffleTrack = useSelector(shuffleTracksSelector)
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    const ref = audioRef.current;
+    const ref = audioRef.current
 
-    const toggleProgress = (e) => {
+    const handleTimeUpdateEvent = (e) => {
       if (ref.currentTime && ref.duration) {
-        setValue(ref.currentTime);
-        setDuration(ref.duration);
+        setValue(ref.currentTime)
+        setDuration(ref.duration)
       } else {
-        setValue(0);
-        setDuration(0);
+        setValue(0)
+        setDuration(0)
       }
-    };
+    }
 
-    ref.addEventListener("timeupdate", toggleProgress);
+    ref.addEventListener("timeupdate", handleTimeUpdateEvent)
 
     return () => {
-      ref.removeEventListener("timeupdate", toggleProgress);
-    };
-  }, [audioRef]);
+      ref.removeEventListener("timeupdate", handleTimeUpdateEvent)
+    }
+  }, [audioRef])
 
-  // const toggleProgress = (e) => {
-  //   audioRef.current.currentTime = e.target.value;
-  // };
+  const toggleProgress = (e) => {
+    audioRef.current.currentTime = e.target.value
+  }
 
   // useEffect(() => {
   //   if (audioRef?.current.duration) {
@@ -67,18 +65,16 @@ function PlayerProgress({ audioRef }) {
   // });
 
   useEffect(() => {
-    if (value === duration) {
-      if (activeTrack.index === allTracks.length - 1) return;
-      dispatch(
-        addActiveTrack({ ...activeTrack, index: activeTrack.index + 1 })
-      );
+    if (!audioRef && value === duration) {
+      if (activeTrack.index === allTracks.length - 1) return
+      dispatch(addActiveTrack({ ...activeTrack, index: activeTrack.index + 1 }))
       if (activeTrack.shuffle) {
-        dispatch(addPlayTrack(shuffleTrack[activeTrack.index + 1]));
+        dispatch(addPlayTrack(shuffleTrack[activeTrack.index + 1]))
       } else {
-        dispatch(addPlayTrack(allTracks[activeTrack.index + 1]));
+        dispatch(addPlayTrack(allTracks[activeTrack.index + 1]))
       }
     }
-  }, [value]);
+  }, [value])
 
   return (
     <>
@@ -96,7 +92,7 @@ function PlayerProgress({ audioRef }) {
         {formatTime(Math.floor(value))}/{formatTime(Math.floor(duration))}
       </div>
     </>
-  );
+  )
 }
 
-export default PlayerProgress;
+export default PlayerProgress
