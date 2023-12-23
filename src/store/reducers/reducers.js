@@ -9,6 +9,7 @@ import {
   FAVORITES_TRACKS,
   NEXT_AND_PREV_TRACK,
   ADD_CATEGORY_PLAYLIST,
+  SEARCH,
 } from "../actions/types/types"
 
 const initialTracks = {
@@ -23,6 +24,7 @@ const initialTracks = {
   shuffleTracks: [],
   categoryPlayList: {},
   favoriteTracks: [],
+  search: "",
 }
 
 function tracksReducer(state = initialTracks, action) {
@@ -134,6 +136,15 @@ function tracksReducer(state = initialTracks, action) {
       return {
         ...state,
         categoryPlayList,
+      }
+    }
+
+    case SEARCH: {
+      const { search } = action.payload
+
+      return {
+        ...state,
+        search,
       }
     }
 
