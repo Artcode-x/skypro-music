@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import style from "./filterButton.module.css"
-
-import FilterListYear from "../filterListYear/filterListYear"
+import ystyle from "../filterListYear/filterListYear.module.css"
+// import FilterListYear from "../filterListYear/filterListYear"
 
 import { useDispatch, useSelector } from "react-redux"
 import allTracksSelector, {
@@ -23,6 +23,7 @@ function FilterButton() {
 
   const [filterAuthor, setFilterAuthor] = useState("")
   const [filterGenre, setFilterGenre] = useState("")
+  const [filterYear, setFilterYear] = useState("")
 
   const [filter, setFilter] = useState(0)
   const toggleFilter = (id) => {
@@ -57,6 +58,15 @@ function FilterButton() {
     )
     dispatch(setFilteredTracks(true))
     dispatch(setArrayFilteredTracks(filterGenre))
+  }
+
+  const handleClickFilterYear = (e) => {
+    setFilterYear(e.target.textContent)
+    const filterYear = allTracks.filter(
+      (track) => track.release_date === e.target.textContent
+    )
+    dispatch(setFilteredTracks(true))
+    dispatch(setArrayFilteredTracks(filterYear))
   }
 
   return (
@@ -128,7 +138,53 @@ function FilterButton() {
           >
             году выпуска
           </div>
-          {filter === 2 ? <FilterListYear /> : null}
+          {filter === 2 ? (
+            <div className={styled.filterList}>
+              <ul className={styled.filterList__performer}>
+                {/* <div className={ystyle.filterList__year}> */}
+
+                <li
+                  className={ystyle.filterList__text}
+                  onClick={(e) => handleClickFilterYear(e)}
+                >
+                  1985-02-02
+                </li>
+
+                <li
+                  className={ystyle.filterList__text}
+                  onClick={(e) => handleClickFilterYear(e)}
+                >
+                  1972-06-06
+                </li>
+
+                <li
+                  className={ystyle.filterList__text}
+                  onClick={(e) => handleClickFilterYear(e)}
+                >
+                  2012-06-01
+                </li>
+
+                <li
+                  className={ystyle.filterList__text}
+                  onClick={(e) => handleClickFilterYear(e)}
+                >
+                  2021-10-19
+                </li>
+                <li
+                  className={ystyle.filterList__text}
+                  onClick={(e) => handleClickFilterYear(e)}
+                >
+                  2022-07-12
+                </li>
+                <li
+                  className={ystyle.filterList__text}
+                  onClick={(e) => handleClickFilterYear(e)}
+                >
+                  2019
+                </li>
+              </ul>
+            </div>
+          ) : null}
         </div>
         <div>
           <div
