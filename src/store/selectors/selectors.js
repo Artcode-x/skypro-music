@@ -15,4 +15,10 @@ export const categoryTracksSelector = (store) =>
 
 export const searchSelector = (store) => trackSelector(store)?.search
 
+export const filteredTracksSelector = (store) =>
+  trackSelector(store)?.isFilteredTracks
+
+export const filteredArrayTracksSelector = (store) =>
+  trackSelector(store)?.filteredTracksArray
+
 export default allTracksSelector

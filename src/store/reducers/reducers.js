@@ -10,6 +10,8 @@ import {
   NEXT_AND_PREV_TRACK,
   ADD_CATEGORY_PLAYLIST,
   SEARCH,
+  FILTERED_TRACKS,
+  ARRAY_FITERED_TRACKS,
 } from "../actions/types/types"
 
 const initialTracks = {
@@ -25,6 +27,8 @@ const initialTracks = {
   categoryPlayList: {},
   favoriteTracks: [],
   search: "",
+  isFilteredTracks: false,
+  filteredTracksArray: [],
 }
 
 function tracksReducer(state = initialTracks, action) {
@@ -145,6 +149,24 @@ function tracksReducer(state = initialTracks, action) {
       return {
         ...state,
         search,
+      }
+    }
+
+    case FILTERED_TRACKS: {
+      const { isFilteredTracks } = action.payload
+
+      return {
+        ...state,
+        isFilteredTracks,
+      }
+    }
+
+    case ARRAY_FITERED_TRACKS: {
+      const { filteredTracksArray } = action.payload
+
+      return {
+        ...state,
+        filteredTracksArray,
       }
     }
 

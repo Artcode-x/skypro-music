@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import S from "./playListTrack.module.css"
 import sprite from "../../../img/icon/sprite.svg"
 import Skeleton from "../../Skeleton"
@@ -9,6 +9,8 @@ import addTracks, {
 } from "../../../store/actions/creators/creators"
 import allTracksSelector, {
   activeTrackSelector,
+  filteredArrayTracksSelector,
+  filteredTracksSelector,
   playTrackSelector,
   searchSelector,
   userSelector,
@@ -17,6 +19,15 @@ import formatTime from "../../Helper/Helper"
 import getTrackAll, { addLike, disLike, refreshToken } from "../../../api/Api"
 
 function PlayListTrack({ loading, getError }) {
+  // Тут достаем обновленный массив треков после фильтрации ( то что было записано)
+  const filteredArrayTracks = useSelector(filteredArrayTracksSelector)
+  useEffect(() => {
+    console.log(filteredArrayTracks)
+  }, [])
+
+  // далее извлекаем наш флаг со значением true или false, true возвращает через метод filter если были совпадения (в массиве(allTracks) с тем текстом что у нас в фильтре (имя иполнителя/ e.target.textContent)
+  const isfilteredTrack = useSelector(filteredTracksSelector)
+
   const [disabled, setDisabled] = useState(false)
   const user = useSelector(userSelector)
   const allTrack = useSelector(allTracksSelector)
@@ -90,6 +101,8 @@ function PlayListTrack({ loading, getError }) {
       </div>
     )
   }
+  // Если наш флаг isfilteredTrack = true ( есть совпадение ) - записываем filteredArrayTracks в actuallyTracks, иначе  запишем allTrack
+  const actuallyTracks = isfilteredTrack ? filteredArrayTracks : allTrack
 
   return (
     <div className={S.content__playlist}>
@@ -115,7 +128,8 @@ function PlayListTrack({ loading, getError }) {
             </div>
           </div>
         ) : (
-          allTrack
+          // {actuallyTracks вместо allTrack}
+          actuallyTracks
             .filter((val) => {
               if (searchInputText == "") {
                 return val

@@ -8,6 +8,8 @@ import {
   NEXT_AND_PREV_TRACK,
   ADD_CATEGORY_PLAYLIST,
   SEARCH,
+  FILTERED_TRACKS,
+  ARRAY_FITERED_TRACKS,
 } from "../types/types"
 
 const addTracks = (tracks) => ({
@@ -52,6 +54,16 @@ export const addCategoryPlayList = (categoryPlayList) => ({
 export const addSearchUpdate = (search) => ({
   type: SEARCH,
   payload: { search },
+})
+
+export const setFilteredTracks = (isFilteredTracks) => ({
+  type: FILTERED_TRACKS,
+  payload: { isFilteredTracks },
+})
+
+export const setArrayFilteredTracks = (filteredTracksArray) => ({
+  type: ARRAY_FITERED_TRACKS,
+  payload: { filteredTracksArray },
 })
 
 export default addTracks
