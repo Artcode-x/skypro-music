@@ -63,7 +63,7 @@ export const setFilteredTracks = (isFilteredTracks) => ({
 
 export const setArrayFilteredTracks = (filteredTracksArray) => ({
   type: ARRAY_FITERED_TRACKS,
-  payload: { filteredTracksArray },
+  payload: [filteredTracksArray],
 })
 
 export default addTracks

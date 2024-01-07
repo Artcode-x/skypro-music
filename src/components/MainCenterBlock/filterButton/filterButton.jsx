@@ -5,6 +5,7 @@ import ystyle from "../filterListYear/filterListYear.module.css"
 
 import { useDispatch, useSelector } from "react-redux"
 import allTracksSelector, {
+  filteredArrayTracksSelector,
   filteredTracksSelector,
 } from "../../../store/selectors/selectors"
 import styled from "../filterListPerformer/filterListPerformer.module.css"
@@ -16,6 +17,8 @@ import xstyle from "../filerListGenre/filterListGenre.module.css"
 
 function FilterButton() {
   const dispatch = useDispatch()
+
+  const flag = useSelector(filteredTracksSelector)
 
   // const isFiltered = useSelector(filteredTracksSelector)
 
@@ -32,6 +35,27 @@ function FilterButton() {
 
   const handleKeyDown = (numb) => toggleFilter(numb)
 
+  let filteredByAuthor = []
+  filteredByAuthor = useSelector(filteredArrayTracksSelector)
+  // для сортировки
+  const [selectedAuthor, setSelectedAuthor] = useState([])
+  const [selectedGenres, setSelectedGenres] = useState([])
+  const [selectedYear, setSelectedYear] = useState([])
+
+  const [chosenAuthors, setChosenAuthors] = useState([])
+
+  const [selectedAuthors, setSelectedAuthors] = useState()
+
+  /// 1. Создаем массив с авторами трека
+  const newArr = allTracks.map((key) => {
+    return key.author
+  })
+
+  // 2. делам так чтобы авторы не повторялись
+  const UniqueArrayOfAuthor = [...new Set(newArr.sort())]
+  console.log(UniqueArrayOfAuthor)
+  ///
+
   const handleClickFilter = (e) => {
     setFilterAuthor(e.target.textContent)
 
@@ -40,10 +64,37 @@ function FilterButton() {
     )
 
     dispatch(setFilteredTracks(true))
-
-    dispatch(setArrayFilteredTracks(filteredAuthor))
+    console.log(filteredAuthor[0])
+    console.log(filteredByAuthor)
+    // const mixArray = filteredByAuthor.concat(filteredAuthor)
+    // const newArray = [...filteredByAuthor, filteredAuthor]
+    dispatch(setArrayFilteredTracks([...filteredByAuthor, filteredAuthor[0]]))
+    // console.log(newArray)
+    console.log(filteredByAuthor)
   }
 
+  // убрать фильтр
+  //   function handleClick(key) {
+  // убрать
+  //     if (authorArray.includes(key)) {
+  //         dispatch(
+  //             setFilterByAuthor(authorArray.filter((item) => item != key))
+  //         )
+  // добавить
+  //     } else {
+  //         dispatch(setFilterByAuthor([...authorArray, key]))
+  //     }
+  // }
+  // function clearFilter(){
+  //     dispatch(setFilterByAuthor([]))
+  // }
+
+  useEffect(() => {
+    setChosenAuthors([123])
+    console.log(chosenAuthors)
+  }, [])
+
+  // console.log(selectedAuthor)
   // у фильтра значения 0,1,2,3
   useEffect(() => {
     if (filter === 0) {
@@ -56,8 +107,9 @@ function FilterButton() {
     const filterGenre = allTracks.filter(
       (track) => track.genre === e.target.textContent
     )
-    dispatch(setFilteredTracks(true))
-    dispatch(setArrayFilteredTracks(filterGenre))
+    //  dispatch(setFilteredTracks(true))
+
+    //  dispatch(setArrayFilteredTracks([...filteredByAuthor, filterGenre]))
   }
 
   const handleClickFilterYear = (e) => {
@@ -66,14 +118,45 @@ function FilterButton() {
       (track) => track.release_date === e.target.textContent
     )
     dispatch(setFilteredTracks(true))
-    dispatch(setArrayFilteredTracks(filterYear))
+    // dispatch(setArrayFilteredTracks(filterYear))
   }
+
+  const filterTracks = () => {}
+
+  const handle4filter = (e) => {
+    console.log(e.taget.textContent)
+  }
+
+  // 3. для отображения всех авторов применяем map к ранее созданному массиву
+  const listOfAuthors = UniqueArrayOfAuthor.map((key) => {
+    return (
+      <li
+        className={styled.filterList__text}
+        onClick={(e) => handleClickFilter(e)}
+      >
+        {key}
+      </li>
+      // <S.FilterAuthorItems
+      //     href="#"
+      //     key={key}
+      //     onClick={() => handleClickFilter(key)}
+      // >
+      //     {filteredByAuthor.includes(key) ? (
+      //         <S.FilterAuthorItemsActive>{key}</S.FilterAuthorItemsActive>
+      //     ) : (
+      //         <span>{key}</span>
+      //     )}
+      // </S.FilterAuthorItems>
+    )
+  })
 
   return (
     <div className={style.centerBlock__filter}>
       <div className={style.filter__title}>Искать по:</div>
       <div className={style.filter__box}>
         <div>
+          {/* {flag ? (доп стиль чтобы что то горело) : (блок ниже)} */}
+
           <div
             onClick={() => toggleFilter(1)}
             role="button"
@@ -85,42 +168,21 @@ function FilterButton() {
               filter === 1 ? style.filter__buttonActive : style.filter__button
             }
           >
+            {filteredByAuthor.length !== 0 && (
+              <div className={style.Tbl}>
+                {/* пок-м длинну массива */}
+                <div className={styled.color1}>{filteredByAuthor.length}</div>
+              </div>
+            )}
             исполнителю
           </div>
+
           {filter === 1 ? (
             <div className={styled.filterList}>
-              <ul className={styled.filterList__performer}>
-                <li
-                  className={styled.filterList__text}
-                  onClick={(e) => handleClickFilter(e)}
-                >
-                  Alexander Nakarada
-                </li>
-                <li
-                  className={styled.filterList__text}
-                  onClick={(e) => handleClickFilter(e)}
-                >
-                  Frank Schroter
-                </li>
-                <li
-                  className={styled.filterList__text}
-                  onClick={(e) => handleClickFilter(e)}
-                >
-                  Waltz Piano
-                </li>
-                <li
-                  className={styled.filterList__text}
-                  onClick={(e) => handleClickFilter(e)}
-                >
-                  Voisin
-                </li>
-                <li
-                  className={styled.filterList__text}
-                  onClick={(e) => handleClickFilter(e)}
-                >
-                  Kevin Macleodburn
-                </li>
-              </ul>
+              {/* listOfAuthors.map((item) => {
+    return
+              }) */}
+              <ul className={styled.filterList__performer}>{listOfAuthors}</ul>
             </div>
           ) : null}
         </div>
@@ -236,6 +298,58 @@ function FilterButton() {
               </ul>
             </div>
           ) : null}
+        </div>
+
+        <div className="otstup">
+          <div>
+            <div
+              onClick={() => toggleFilter(4)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(event) =>
+                handleKeyDown(event.key === "Enter" ? 4 : null)
+              }
+              className={filter === 4 ? style.button17_activee : style.button17}
+            >
+              СОРТИРовка по новизне
+            </div>
+            {filter === 4 ? (
+              <div className={xstyle.filterList}>
+                <ul className={xstyle.filterList__Genre}>
+                  <li
+                    className={xstyle.filterList__text}
+                    onClick={(e) => handle4filter(e)}
+                  >
+                    Задолбал
+                  </li>
+                  <li
+                    className={xstyle.filterList__text}
+                    onClick={(e) => handle4filter(e)}
+                  >
+                    Меня этот
+                  </li>
+                  <li
+                    className={xstyle.filterList__text}
+                    onClick={(e) => handle4filter(e)}
+                  >
+                    Плеер
+                  </li>
+                  <li
+                    className={xstyle.filterList__text}
+                    onClick={(e) => handle4filter(e)}
+                  >
+                    Ужасно
+                  </li>
+                  <li
+                    className={xstyle.filterList__text}
+                    onClick={(e) => handle4filter(e)}
+                  >
+                    !!!!!
+                  </li>
+                </ul>
+              </div>
+            ) : null}
+          </div>
         </div>
       </div>
     </div>

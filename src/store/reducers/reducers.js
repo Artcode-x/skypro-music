@@ -162,7 +162,7 @@ function tracksReducer(state = initialTracks, action) {
     }
 
     case ARRAY_FITERED_TRACKS: {
-      const { filteredTracksArray } = action.payload
+      const [filteredTracksArray] = action.payload
 
       return {
         ...state,

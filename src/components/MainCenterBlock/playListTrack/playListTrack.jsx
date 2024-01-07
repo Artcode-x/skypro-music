@@ -199,7 +199,7 @@ function PlayListTrack({ loading, getError }) {
                     className={S.track__buttonLike}
                   >
                     <svg className={S.track__timeSvg} alt="time">
-                      {track.stared_user.find((el) => el.id === user.id) ? (
+                      {track.stared_user?.find((el) => el.id === user.id) ? (
                         <use xlinkHref={`${sprite}#icon-likeActive`} />
                       ) : (
                         <use xlinkHref={`${sprite}#icon-like`} />
