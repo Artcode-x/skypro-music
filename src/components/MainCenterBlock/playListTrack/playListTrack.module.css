@@ -20,6 +20,10 @@
     border-radius: 4px;
 }
 
+.Hide {
+    display: 'none';
+}
+
 .playlist__track {
     display: flex;
     flex-direction: row;

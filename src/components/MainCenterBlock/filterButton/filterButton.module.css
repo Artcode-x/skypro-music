@@ -63,3 +63,51 @@
     color: #ad61ff;
     cursor: pointer;
 }
+
+.Tbl {
+    border-radius: 50%;
+    height: 25px;
+    width: 25px;
+    background-color: #AD61FF;
+    position: absolute;
+    top: -13px;
+    right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+
+
+.button17 {
+    position: relative;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    border: 1px solid #ffffff;
+    border-radius: 60px;
+    padding: 6px 20px;
+}
+
+
+.button17_activee {
+    position: relative;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    border: 1px solid #ad61ff;
+    border-radius: 60px;
+    padding: 6px 20px;
+    color: #ad61ff;
+}
+
+.otstup {
+    background-color: coral;
+}
+
+.color1 {
+    color: red;
+}
