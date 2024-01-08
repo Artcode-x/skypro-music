@@ -12,6 +12,9 @@ import {
   SEARCH,
   FILTERED_TRACKS,
   ARRAY_FITERED_TRACKS,
+  ARRAY_GENRE,
+  ARRAY_YEAR,
+  FLAG_FILTERS,
 } from "../actions/types/types"
 
 const initialTracks = {
@@ -29,6 +32,9 @@ const initialTracks = {
   search: "",
   isFilteredTracks: false,
   filteredTracksArray: [],
+  arrayGenre: [],
+  arrayYear: "по умолчанию",
+  flag: {},
 }
 
 function tracksReducer(state = initialTracks, action) {
@@ -167,6 +173,33 @@ function tracksReducer(state = initialTracks, action) {
       return {
         ...state,
         filteredTracksArray,
+      }
+    }
+
+    case ARRAY_GENRE: {
+      const [arrayGenre] = action.payload
+
+      return {
+        ...state,
+        arrayGenre,
+      }
+    }
+
+    case ARRAY_YEAR: {
+      const [arrayYear] = action.payload
+
+      return {
+        ...state,
+        arrayYear,
+      }
+    }
+
+    case FLAG_FILTERS: {
+      const { flag } = action.payload
+
+      return {
+        ...state,
+        flag,
       }
     }
 

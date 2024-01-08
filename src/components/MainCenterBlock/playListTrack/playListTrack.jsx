@@ -20,9 +20,17 @@ import getTrackAll, { addLike, disLike, refreshToken } from "../../../api/Api"
 
 function PlayListTrack({ loading, getError }) {
   // Тут достаем обновленный массив треков после фильтрации ( то что было записано)
-  const filteredArrayTracks = useSelector(filteredArrayTracksSelector)
+  // const filteredArrayTracks = useSelector(filteredArrayTracksSelector)
+
+  const filteredByAuthor = useSelector(filteredArrayTracksSelector)
+  const arrayYear = useSelector((store) => store.tracks.arrayYear)
+
+  let arrayGenre
+  arrayGenre = useSelector((store) => store.tracks.arrayGenre)
+  const xflag = useSelector((store) => store.tracks.flag)
+
   useEffect(() => {
-    console.log(filteredArrayTracks)
+    //  console.log(filteredArrayTracks)
   }, [])
 
   // далее извлекаем наш флаг со значением true или false, true возвращает через метод filter если были совпадения (в массиве(allTracks) с тем текстом что у нас в фильтре (имя иполнителя/ e.target.textContent)
@@ -101,9 +109,36 @@ function PlayListTrack({ loading, getError }) {
       </div>
     )
   }
-  // Если наш флаг isfilteredTrack = true ( есть совпадение ) - записываем filteredArrayTracks в actuallyTracks, иначе  запишем allTrack
-  const actuallyTracks = isfilteredTrack ? filteredArrayTracks : allTrack
 
+  // Блок отвечает за сортировку и фильтрацию
+
+  const actuallyTracks = allTrack.filter((elem) => {
+    if (filteredByAuthor.length == 0) return elem
+    return filteredByAuthor.includes(elem.author)
+  })
+
+  const genreArray = actuallyTracks.filter((el) => {
+    if (arrayGenre.length == 0) return el
+
+    return arrayGenre.includes(el.genre)
+  })
+
+  // year
+  const finalPlayList =
+    arrayYear == "по умолчанию"
+      ? genreArray
+      : genreArray.sort(function (a, b) {
+          if (arrayYear == "сначала новые") [a, b] = [b, a]
+          if (a["release_date"] > b["release_date"]) {
+            return 1
+          }
+          if (a["release_date"] < b["release_date"]) {
+            return -1
+          }
+          return 0
+        })
+
+  console.log(genreArray)
   return (
     <div className={S.content__playlist}>
       <div className={S.playlist__item}>
@@ -129,7 +164,7 @@ function PlayListTrack({ loading, getError }) {
           </div>
         ) : (
           // {actuallyTracks вместо allTrack}
-          actuallyTracks
+          finalPlayList
             .filter((val) => {
               if (searchInputText == "") {
                 return val

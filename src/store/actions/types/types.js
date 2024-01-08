@@ -12,3 +12,8 @@ export const SEARCH = "SEARCH"
 export const FILTERED_TRACKS = "FILTERED_TRACKS"
 
 export const ARRAY_FITERED_TRACKS = "ARRAY_FITERED_TRACKS"
+
+export const ARRAY_GENRE = "ARRAY_GENRE"
+export const ARRAY_YEAR = "ARRAY_YEAR"
+
+export const FLAG_FILTERS = "FLAG_FILTERS"

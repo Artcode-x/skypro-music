@@ -11,7 +11,10 @@ import allTracksSelector, {
 import styled from "../filterListPerformer/filterListPerformer.module.css"
 import {
   setArrayFilteredTracks,
+  setArrayGenre,
+  setArrayYear,
   setFilteredTracks,
+  setFlagFilters,
 } from "../../../store/actions/creators/creators"
 import xstyle from "../filerListGenre/filterListGenre.module.css"
 
@@ -37,6 +40,13 @@ function FilterButton() {
 
   let filteredByAuthor = []
   filteredByAuthor = useSelector(filteredArrayTracksSelector)
+
+  let arrayYear = []
+  arrayYear = useSelector((store) => store.tracks.arrayYear)
+
+  let arrayGenre = []
+  arrayGenre = useSelector((store) => store.tracks.arrayGenre)
+
   // для сортировки
   const [selectedAuthor, setSelectedAuthor] = useState([])
   const [selectedGenres, setSelectedGenres] = useState([])
@@ -44,8 +54,9 @@ function FilterButton() {
 
   const [chosenAuthors, setChosenAuthors] = useState([])
 
-  const [selectedAuthors, setSelectedAuthors] = useState()
+  // const [selectedAuthors, setSelectedAuthors] = useState()
 
+  // ДЛЯ АВТОРОВ
   /// 1. Создаем массив с авторами трека
   const newArr = allTracks.map((key) => {
     return key.author
@@ -53,24 +64,51 @@ function FilterButton() {
 
   // 2. делам так чтобы авторы не повторялись
   const UniqueArrayOfAuthor = [...new Set(newArr.sort())]
-  console.log(UniqueArrayOfAuthor)
+  // console.log(UniqueArrayOfAuthor)
   ///
 
+  // ДЛЯ ЖАНРОВ
+  const GenreArr = allTracks.map((key) => {
+    return key.genre
+  })
+  const UniqueArrOfGenre = [...new Set(GenreArr.sort())]
+  // console.log(UniqueArrOfGenre)
+  // ДЛЯ ДАТ
+  const YearArr = allTracks.map((key) => {
+    return key.release_date
+  })
+  const UniqueArrOfYear = [...new Set(YearArr.sort())]
+  // console.log(UniqueArrOfYear)
+
+  ////////////////////////////////////////////////////////////////////
   const handleClickFilter = (e) => {
-    setFilterAuthor(e.target.textContent)
+    // setFilterAuthor(key.target.textContent)
 
-    const filteredAuthor = allTracks.filter(
-      (track) => track.author === e.target.textContent
-    )
-
-    dispatch(setFilteredTracks(true))
-    console.log(filteredAuthor[0])
-    console.log(filteredByAuthor)
+    // const filteredAuthor = allTracks.filter(
+    //   (track) => track.author === key.target.textContent
+    // )
+    const author = e.target.textContent
+    // dispatch(setFilteredTracks(true))
+    // console.log(filteredAuthor[0])
+    // console.log(filteredByAuthor)
     // const mixArray = filteredByAuthor.concat(filteredAuthor)
     // const newArray = [...filteredByAuthor, filteredAuthor]
-    dispatch(setArrayFilteredTracks([...filteredByAuthor, filteredAuthor[0]]))
+
+    // dispatch(setArrayFilteredTracks([...filteredByAuthor, author]))
+
+    if (filteredByAuthor.includes(author)) {
+      dispatch(
+        setArrayFilteredTracks(
+          filteredByAuthor.filter((item) => item != author)
+        )
+      )
+    } else {
+      dispatch(setArrayFilteredTracks([...filteredByAuthor, author]))
+    }
+
+    // dispatch(setFlagFilters("author"))
     // console.log(newArray)
-    console.log(filteredByAuthor)
+    // console.log(filteredByAuthor)
   }
 
   // убрать фильтр
@@ -91,7 +129,7 @@ function FilterButton() {
 
   useEffect(() => {
     setChosenAuthors([123])
-    console.log(chosenAuthors)
+    // console.log(chosenAuthors)
   }, [])
 
   // console.log(selectedAuthor)
@@ -103,30 +141,45 @@ function FilterButton() {
   }, [filter])
 
   const handleClickFilterGenre = (e) => {
-    setFilterGenre(e.target.textContent)
-    const filterGenre = allTracks.filter(
-      (track) => track.genre === e.target.textContent
-    )
+    // setFilterGenre(e.target.textContent)
+    // const filterGenre = allTracks.filter(
+    //   (track) => track.genre === e.target.textContent
+    // )
+
+    const genre = e.target.textContent
     //  dispatch(setFilteredTracks(true))
 
     //  dispatch(setArrayFilteredTracks([...filteredByAuthor, filterGenre]))
+    // dispatch(setArrayGenre([...arrayGenre, genre]))
+
+    if (arrayGenre.includes(genre)) {
+      dispatch(setArrayGenre(arrayGenre.filter((item) => item != genre)))
+    } else {
+      dispatch(setArrayGenre([...arrayGenre, genre]))
+    }
+
+    // dispatch(setFlagFilters("genre"))
+    //  console.log(arrayGenre)
   }
 
-  const handleClickFilterYear = (e) => {
-    setFilterYear(e.target.textContent)
-    const filterYear = allTracks.filter(
-      (track) => track.release_date === e.target.textContent
-    )
-    dispatch(setFilteredTracks(true))
-    // dispatch(setArrayFilteredTracks(filterYear))
-  }
+  // const handleClickFilterYear = (e) => {
+  //   setFilterYear(e.target.textContent)
+  //   const filterYear = allTracks.filter(
+  //     (track) => track.release_date === e.target.textContent
+  //   )
+  //   dispatch(setFilteredTracks(true))
+  //   // dispatch(setArrayFilteredTracks(filterYear))
+  //   dispatch(setArrayYear([...arrayYear, filterYear[0]]))
+  //   dispatch(setFlagFilters("year"))
+  // }
 
-  const filterTracks = () => {}
+  // const filterTracks = () => {}
 
   const handle4filter = (e) => {
     console.log(e.taget.textContent)
   }
 
+  // ДЛЯ АВТОРОВ
   // 3. для отображения всех авторов применяем map к ранее созданному массиву
   const listOfAuthors = UniqueArrayOfAuthor.map((key) => {
     return (
@@ -136,19 +189,32 @@ function FilterButton() {
       >
         {key}
       </li>
-      // <S.FilterAuthorItems
-      //     href="#"
-      //     key={key}
-      //     onClick={() => handleClickFilter(key)}
-      // >
-      //     {filteredByAuthor.includes(key) ? (
-      //         <S.FilterAuthorItemsActive>{key}</S.FilterAuthorItemsActive>
-      //     ) : (
-      //         <span>{key}</span>
-      //     )}
-      // </S.FilterAuthorItems>
     )
   })
+
+  // ДЛЯ ЖАНРОВ
+  const listOfGenre = UniqueArrOfGenre.map((item) => {
+    return (
+      <li
+        className={xstyle.filterList__text}
+        onClick={(e) => handleClickFilterGenre(e)}
+      >
+        {item}
+      </li>
+    )
+  })
+  // ДЛЯ ДАТ
+  // const listOfDate = UniqueArrOfYear.map((date) => {
+  //   return (
+  //     <li
+  //       className={ystyle.filterList__text}
+  //      // onClick={(e) => handleClickFilterYear(e)}
+  //     >
+  //       {date}
+  //     </li>
+  //   )
+  // })
+  console.log(arrayYear)
 
   return (
     <div className={style.centerBlock__filter}>
@@ -178,72 +244,23 @@ function FilterButton() {
           </div>
 
           {filter === 1 ? (
-            <div className={styled.filterList}>
-              {/* listOfAuthors.map((item) => {
-    return
-              }) */}
-              <ul className={styled.filterList__performer}>{listOfAuthors}</ul>
+            <div className={styled.filterList} key={listOfAuthors.id}>
+              <ul className={styled.filterList__performer}>
+                {/* а тут отобразим наших авторов */}
+                {listOfAuthors}
+              </ul>
             </div>
           ) : null}
         </div>
         <div>
-          <div
-            onClick={() => toggleFilter(2)}
-            role="button"
-            tabIndex={0}
-            onKeyDown={(event) =>
-              handleKeyDown(event.key === "Enter" ? 2 : null)
-            }
-            className={
-              filter === 2 ? style.filter__buttonActive : style.filter__button
-            }
-          >
-            году выпуска
-          </div>
           {filter === 2 ? (
-            <div className={styled.filterList}>
+            <div
+              className={styled.filterList}
+              //key={listOfDate.id}
+            >
               <ul className={styled.filterList__performer}>
+                {/* {listOfDate} */}
                 {/* <div className={ystyle.filterList__year}> */}
-
-                <li
-                  className={ystyle.filterList__text}
-                  onClick={(e) => handleClickFilterYear(e)}
-                >
-                  1985-02-02
-                </li>
-
-                <li
-                  className={ystyle.filterList__text}
-                  onClick={(e) => handleClickFilterYear(e)}
-                >
-                  1972-06-06
-                </li>
-
-                <li
-                  className={ystyle.filterList__text}
-                  onClick={(e) => handleClickFilterYear(e)}
-                >
-                  2012-06-01
-                </li>
-
-                <li
-                  className={ystyle.filterList__text}
-                  onClick={(e) => handleClickFilterYear(e)}
-                >
-                  2021-10-19
-                </li>
-                <li
-                  className={ystyle.filterList__text}
-                  onClick={(e) => handleClickFilterYear(e)}
-                >
-                  2022-07-12
-                </li>
-                <li
-                  className={ystyle.filterList__text}
-                  onClick={(e) => handleClickFilterYear(e)}
-                >
-                  2019
-                </li>
               </ul>
             </div>
           ) : null}
@@ -260,41 +277,20 @@ function FilterButton() {
               filter === 3 ? style.filter__buttonActive : style.filter__button
             }
           >
+            {/* логика иконки индикатора */}
+            {arrayGenre.length !== 0 && (
+              <div className={style.Tbl}>
+                {/* пок-м длинну массива */}
+                <div className={styled.color1}>{arrayGenre.length}</div>
+              </div>
+            )}
             жанру
           </div>
           {filter === 3 ? (
-            <div className={xstyle.filterList}>
+            <div className={xstyle.filterList} key={listOfGenre.id}>
               <ul className={xstyle.filterList__Genre}>
-                <li
-                  className={xstyle.filterList__text}
-                  onClick={(e) => handleClickFilterGenre(e)}
-                >
-                  Классическая музыка
-                </li>
-                <li
-                  className={xstyle.filterList__text}
-                  onClick={(e) => handleClickFilterGenre(e)}
-                >
-                  Электронная музыка
-                </li>
-                <li
-                  className={xstyle.filterList__text}
-                  onClick={(e) => handleClickFilterGenre(e)}
-                >
-                  Рок музыка
-                </li>
-                <li
-                  className={xstyle.filterList__text}
-                  onClick={(e) => handleClickFilterGenre(e)}
-                >
-                  Техно
-                </li>
-                <li
-                  className={xstyle.filterList__text}
-                  onClick={(e) => handleClickFilterGenre(e)}
-                >
-                  Инди
-                </li>
+                {/* тут отобразим жанры  */}
+                {listOfGenre}
               </ul>
             </div>
           ) : null}
@@ -311,40 +307,41 @@ function FilterButton() {
               }
               className={filter === 4 ? style.button17_activee : style.button17}
             >
-              СОРТИРовка по новизне
+              {/* логика иконки индикатора */}
+              {arrayYear.length !== 0 && (
+                <div className={style.Tbl}>
+                  {/* пок-м длинну массива */}
+                  <div className={styled.color1}>
+                    {arrayYear == "сначала новые"
+                      ? String.fromCodePoint(8593)
+                      : arrayYear == "сначала старые"
+                      ? String.fromCodePoint(8595)
+                      : ">"}
+                  </div>
+                </div>
+              )}
+              СОРТИРовка
             </div>
             {filter === 4 ? (
               <div className={xstyle.filterList}>
                 <ul className={xstyle.filterList__Genre}>
                   <li
                     className={xstyle.filterList__text}
-                    onClick={(e) => handle4filter(e)}
+                    onClick={() => dispatch(setArrayYear("по умолчанию"))}
                   >
-                    Задолбал
+                    по умолчанию
                   </li>
                   <li
                     className={xstyle.filterList__text}
-                    onClick={(e) => handle4filter(e)}
+                    onClick={() => dispatch(setArrayYear("сначала новые"))}
                   >
-                    Меня этот
+                    сначала новые
                   </li>
                   <li
                     className={xstyle.filterList__text}
-                    onClick={(e) => handle4filter(e)}
+                    onClick={() => dispatch(setArrayYear("сначала старые"))}
                   >
-                    Плеер
-                  </li>
-                  <li
-                    className={xstyle.filterList__text}
-                    onClick={(e) => handle4filter(e)}
-                  >
-                    Ужасно
-                  </li>
-                  <li
-                    className={xstyle.filterList__text}
-                    onClick={(e) => handle4filter(e)}
-                  >
-                    !!!!!
+                    сначала старые
                   </li>
                 </ul>
               </div>

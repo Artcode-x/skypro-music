@@ -10,6 +10,9 @@ import {
   SEARCH,
   FILTERED_TRACKS,
   ARRAY_FITERED_TRACKS,
+  ARRAY_YEAR,
+  ARRAY_GENRE,
+  FLAG_FILTERS,
 } from "../types/types"
 
 const addTracks = (tracks) => ({
@@ -64,6 +67,21 @@ export const setFilteredTracks = (isFilteredTracks) => ({
 export const setArrayFilteredTracks = (filteredTracksArray) => ({
   type: ARRAY_FITERED_TRACKS,
   payload: [filteredTracksArray],
+})
+
+export const setArrayGenre = (arrayGenre) => ({
+  type: ARRAY_GENRE,
+  payload: [arrayGenre],
+})
+
+export const setArrayYear = (arrayYear) => ({
+  type: ARRAY_YEAR,
+  payload: [arrayYear],
+})
+
+export const setFlagFilters = (flag) => ({
+  type: FLAG_FILTERS,
+  payload: { flag },
 })
 
 export default addTracks
