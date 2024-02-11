@@ -1,5 +1,5 @@
 /* eslint-disable default-param-last */
-import { currentPlayList } from "../../components/Helper/Helper";
+import { currentPlayList } from "../../components/Helper/Helper"
 import {
   ADD_TRACK,
   PLAY_TRACK,
@@ -9,10 +9,16 @@ import {
   FAVORITES_TRACKS,
   NEXT_AND_PREV_TRACK,
   ADD_CATEGORY_PLAYLIST,
-} from "../actions/types/types";
+  SEARCH,
+  FILTERED_TRACKS,
+  ARRAY_FITERED_TRACKS,
+  ARRAY_GENRE,
+  ARRAY_YEAR,
+  FLAG_FILTERS,
+} from "../actions/types/types"
 
 const initialTracks = {
-  user: {},
+  user: null,
   allTracks: [],
   playTrack: {},
   activeTrack: {
@@ -23,44 +29,50 @@ const initialTracks = {
   shuffleTracks: [],
   categoryPlayList: {},
   favoriteTracks: [],
-};
+  search: "",
+  isFilteredTracks: false,
+  filteredTracksArray: [],
+  arrayGenre: [],
+  arrayYear: "по умолчанию",
+  flag: {},
+}
 
 function tracksReducer(state = initialTracks, action) {
   switch (action.type) {
     case ADD_USER: {
-      const { user } = action.payload;
+      const { user } = action.payload
 
       return {
         ...state,
         user,
-      };
+      }
     }
 
     case ADD_TRACK: {
-      const { tracks } = action.payload;
+      const { tracks } = action.payload
 
       return {
         ...state,
         allTracks: tracks,
-      };
+      }
     }
 
     case PLAY_TRACK: {
-      const { playTrack } = action.payload;
+      const { playTrack } = action.payload
 
       return {
         ...state,
         playTrack,
-      };
+      }
     }
 
     case ACTIVE_TRACK: {
-      const { activeTrack } = action.payload;
+      const { activeTrack } = action.payload
 
       return {
         ...state,
         activeTrack,
-      };
+      }
     }
 
     case SHUFFLE_TRACKS: {
@@ -72,13 +84,13 @@ function tracksReducer(state = initialTracks, action) {
             shuffle: false,
             playList: state.activeTrack.prevPlayList,
           },
-        };
+        }
 
-      const playList = currentPlayList(state);
-      const prevPlayList = state.activeTrack.playList;
-      const shuffleTracks = playList.map((track) => track);
+      const playList = currentPlayList(state)
+      const prevPlayList = state.activeTrack.playList
+      const shuffleTracks = playList.map((track) => track)
 
-      shuffleTracks.sort(() => Math.random() - 0.5);
+      shuffleTracks.sort(() => Math.random() - 0.5)
 
       return {
         ...state,
@@ -90,32 +102,32 @@ function tracksReducer(state = initialTracks, action) {
           shuffle: true,
           idTrack: "newId",
         },
-      };
+      }
     }
 
     case FAVORITES_TRACKS: {
-      const { favoriteTracks } = action.payload;
+      const { favoriteTracks } = action.payload
 
       return {
         ...state,
         favoriteTracks,
-      };
+      }
     }
 
     case NEXT_AND_PREV_TRACK: {
-      const { nextOrPrev } = action.payload;
-      const playList = currentPlayList(state);
+      const { nextOrPrev } = action.payload
+      const playList = currentPlayList(state)
 
       const currentIndex = playList.findIndex(
         (track) => track.id === state.activeTrack.idTrack
-      );
+      )
 
       const newTrack =
         nextOrPrev === "next"
           ? playList[currentIndex + 1]
-          : playList[currentIndex - 1];
+          : playList[currentIndex - 1]
 
-      if (!newTrack) return state;
+      if (!newTrack) return state
 
       return {
         ...state,
@@ -125,21 +137,75 @@ function tracksReducer(state = initialTracks, action) {
           active: true,
           idTrack: newTrack.id,
         },
-      };
+      }
     }
 
     case ADD_CATEGORY_PLAYLIST: {
-      const { categoryPlayList } = action.payload;
+      const { categoryPlayList } = action.payload
 
       return {
         ...state,
         categoryPlayList,
-      };
+      }
+    }
+
+    case SEARCH: {
+      const { search } = action.payload
+
+      return {
+        ...state,
+        search,
+      }
+    }
+
+    case FILTERED_TRACKS: {
+      const { isFilteredTracks } = action.payload
+
+      return {
+        ...state,
+        isFilteredTracks,
+      }
+    }
+
+    case ARRAY_FITERED_TRACKS: {
+      const [filteredTracksArray] = action.payload
+
+      return {
+        ...state,
+        filteredTracksArray,
+      }
+    }
+
+    case ARRAY_GENRE: {
+      const [arrayGenre] = action.payload
+
+      return {
+        ...state,
+        arrayGenre,
+      }
+    }
+
+    case ARRAY_YEAR: {
+      const [arrayYear] = action.payload
+
+      return {
+        ...state,
+        arrayYear,
+      }
+    }
+
+    case FLAG_FILTERS: {
+      const { flag } = action.payload
+
+      return {
+        ...state,
+        flag,
+      }
     }
 
     default:
-      return state;
+      return state
   }
 }
 
-export default tracksReducer;
+export default tracksReducer
